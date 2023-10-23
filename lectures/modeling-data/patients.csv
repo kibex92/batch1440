@@ -1,0 +1,3 @@
+id,name,age,cured,room_id
+1,lucas,35,false,1
+2,bruncky,29,true,2
