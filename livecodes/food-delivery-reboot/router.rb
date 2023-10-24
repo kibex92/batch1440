@@ -1,11 +1,13 @@
 class Router
   def initialize(meals_controller,
                 customers_controller,
-                sessions_controller
+                sessions_controller,
+                orders_controller
   )
     @meals_controller = meals_controller
     @customers_controller = customers_controller
     @sessions_controller = sessions_controller
+    @orders_controller = orders_controller
     @running = true
   end
 
@@ -18,6 +20,7 @@ class Router
         display_menu
         # get the user action
         action = user_action
+        print `clear`
         # dispatch action
         dispatch_action(action)
       end
@@ -41,15 +44,23 @@ class Router
     case action
     when 1 then @meals_controller.add
     when 2 then @meals_controller.list
-    when 3 then @customers_controller.list
-    when 4 then @customers_controller.add
-    when 9 then sign_out
-    when 0 then stop
+    when 3 then @customers_controller.add
+    when 4 then @customers_controller.list
+    when 5 then @orders_controller.add
+    when 7 then sign_out
+    when 8 then stop
+    else puts "Try again..."
     end
   end
   
-  def display_rider_action(action)
-    puts "to do"
+  def dispatch_rider_action(action)
+    case action
+    when 1 then @orders_controller.list_my_orders(@current_user)
+    when 2 then @orders_controller.mark_as_delivered(@current_user)
+    when 3 then sign_out
+    when 4 then stop!
+    else puts "Try again..."
+    end
   end
   
 
@@ -62,18 +73,29 @@ class Router
   end
   
   def display_manager_menu
-    puts "Welcome to the Food Delivery App!"
-    puts "Here's what you can do:"
-    puts "1 - Add a meal"
-    puts "2 - List all meals"
-    puts "3 - List all customers"
-    puts "4 - Add a new customer"
-    puts "9 - Sign out"
-    puts "0 - Exit"
+    puts "--------------------"
+    puts "------- MENU -------"
+    puts "--------------------"
+    puts "1. Add new meal"
+    puts "2. List all meals"
+    puts "3. Add new customer"
+    puts "4. List all customers"
+    puts "5. Add new order"
+    puts "6. List all undelivered orders"
+    puts "7. Logout"
+    puts "8. Exit"
+    print "> "
   end
   
   def display_rider_menu
-    puts "to do"
+    puts "--------------------"
+    puts "------- MENU -------"
+    puts "--------------------"
+    puts "1. List my undelivered orders"
+    puts "2. Mark order as delivered"
+    puts "3. Logout"
+    puts "4. Exit"
+    print "> "
   end
 
   def sign_out
