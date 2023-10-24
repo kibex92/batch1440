@@ -1,6 +1,6 @@
-require_relative 'app/repositories/meal_repository'
+require_relative 'app/repositories/employee_repository'
 
-meals_csv = "data/meals.csv"
-meal_repo = MealRepository.new(meals_csv)
+employees_csv = "data/employees.csv"
+employee_repo = EmployeeRepository.new(employees_csv)
 
-p meal_repo
+p employee_repo
